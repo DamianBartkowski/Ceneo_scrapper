@@ -1,7 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-
+import os
 def extract_element(ancestor, selector, attribute=None, extract_list=False):
     try:
         if extract_list:
@@ -57,6 +57,9 @@ while(page_no):
             all_reviews.append(single_review)
         page_no += 1
     else: page_no = None
-
-with open("reviews/{}.json".format(product_id), "w", encoding="UTF-8") as f:
-    json.dump(all_reviews, f, indent=4, ensure_ascii=False)
+    if not os.path.exists("./reviews"):
+        os.makedirs("reviews")
+    myfile = open("./reviews/{}.json".format(product_id),"w+")
+    myfile.write(json.dumps(all_reviews))
+##with open("./reviews/{}.json".format(product_id), "w+", encoding="UTF-8") as f:
+  ##  json.dump(all_reviews, f, indent=4, ensure_ascii=False)
